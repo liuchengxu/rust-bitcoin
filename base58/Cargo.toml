@@ -21,8 +21,8 @@ all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-hashes = { package = "bitcoin_hashes", version = "0.14.0", default-features = false, features = ["alloc"] }
-internals = { package = "bitcoin-internals", version = "0.2.0" }
+hashes = { workspace = true, version = "0.14.0", default-features = false, features = ["alloc"] }
+internals = { workspace = true, version = "0.2.0" }
 
 [dev-dependencies]
 hex = { package = "hex-conservative", version = "0.2.0", default-features = false, features = ["alloc"] }

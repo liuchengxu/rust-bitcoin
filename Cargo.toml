@@ -2,20 +2,12 @@
 members = ["bitcoin", "hashes", "internals", "fuzz", "io", "units", "base58"]
 resolver = "2"
 
-[patch.crates-io.base58ck]
-path = "base58"
-
-[patch.crates-io.bitcoin]
-path = "bitcoin"
-
-[patch.crates-io.bitcoin_hashes]
-path = "hashes"
-
-[patch.crates-io.bitcoin-internals]
-path = "internals"
-
-[patch.crates-io.bitcoin-io]
-path = "io"
-
-[patch.crates-io.bitcoin-units]
-path = "units"
+[workspace.dependencies]
+base58 = { package = "base58ck", path = "base58" }
+bitcoin = { path = "bitcoin" }
+fuzz = { package = "bitcoin-fuzz", path = "fuzz" }
+internals = { package = "bitcoin-internals", path = "internals" }
+io = { package = "bitcoin-io", path = "io" }
+bitcoin-io = { package = "bitcoin-io", path = "io" }
+hashes = { package = "bitcoin_hashes", path = "hashes" }
+units = { package = "bitcoin-units", path = "units" }
