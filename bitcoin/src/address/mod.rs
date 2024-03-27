@@ -409,6 +409,17 @@ impl<'de> serde::de::DeserializeSeed<'de> for DeserializeSeed {
     }
 }
 
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Address {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::de::Deserializer<'de>,
+    {
+        // TODO: Proper impl
+        Ok(Address::<NetworkUnchecked>::deserialize(deserializer)?.assume_checked())
+    }
+}
+
 /// Methods on [`Address`] that can be called on both `Address<NetworkChecked>` and
 /// `Address<NetworkUnchecked>`.
 impl<V: NetworkValidation> Address<V> {
@@ -759,7 +770,7 @@ impl<V: NetworkValidation> Address<V> {
     fn network(&self) -> Network {
         match self.0 {
             AddressInner::P2sh { network, .. } | AddressInner::P2pkh { network, .. } => {
-                // TODO: this looks spicious
+                // TODO: this looks suspicious
                 match network {
                     NetworkKind::Main => Network::Bitcoin,
                     NetworkKind::Test => Network::Testnet,
