@@ -101,7 +101,7 @@ impl Sub for Work {
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "serde", serde(crate = "actual_serde"))]
-pub struct Target(U256);
+pub struct Target(pub U256);
 
 impl Target {
     /// When parsing nBits, Bitcoin Core converts a negative target threshold into a target of zero.
@@ -333,7 +333,7 @@ impl UpperHex for CompactTarget {
 /// Big-endian 256 bit integer type.
 // (high, low): u.0 contains the high bits, u.1 contains the low bits.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-struct U256(u128, u128);
+pub struct U256(u128, u128);
 
 impl U256 {
     const MAX: U256 =
