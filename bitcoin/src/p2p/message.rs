@@ -314,6 +314,10 @@ impl RawNetworkMessage {
     /// The actual message data
     pub fn payload(&self) -> &NetworkMessage { &self.payload }
 
+    pub fn into_payload(self) -> NetworkMessage {
+        self.payload
+    }
+
     /// Magic bytes to identify the network these messages are meant for
     pub fn magic(&self) -> &Magic { &self.magic }
 
