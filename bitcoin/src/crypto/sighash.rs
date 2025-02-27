@@ -773,6 +773,7 @@ impl<R: Borrow<Transaction>> SighashCache<R> {
         script_code: &Script,
         value: Amount,
         sighash_type: EcdsaSighashType,
+        sighash_type_n: u32,
     ) -> Result<(), SigningDataError<transaction::InputsIndexError>> {
         let zero_hash = sha256d::Hash::all_zeros();
 
@@ -816,7 +817,7 @@ impl<R: Borrow<Transaction>> SighashCache<R> {
         }
 
         self.tx.borrow().lock_time.consensus_encode(writer)?;
-        sighash_type.to_u32().consensus_encode(writer)?;
+        sighash_type_n.consensus_encode(writer)?;
         Ok(())
     }
 
@@ -840,6 +841,7 @@ impl<R: Borrow<Transaction>> SighashCache<R> {
             &script_code,
             value,
             sighash_type,
+            sighash_type.to_u32(),
         )
         .map_err(SigningDataError::unwrap_sighash)?;
         Ok(SegwitV0Sighash::from_engine(enc))
@@ -860,6 +862,7 @@ impl<R: Borrow<Transaction>> SighashCache<R> {
             witness_script,
             value,
             sighash_type,
+            sighash_type.to_u32(),
         )
         .map_err(SigningDataError::unwrap_sighash)?;
         Ok(SegwitV0Sighash::from_engine(enc))
