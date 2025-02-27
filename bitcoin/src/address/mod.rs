@@ -795,6 +795,17 @@ impl fmt::Display for Address {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result { fmt::Display::fmt(&self.0, fmt) }
 }
 
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Address {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::de::Deserializer<'de>,
+    {
+        // TODO: Proper impl
+        Ok(Address::<NetworkUnchecked>::deserialize(deserializer)?.assume_checked())
+    }
+}
+
 impl<V: NetworkValidation> fmt::Debug for Address<V> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if V::IS_CHECKED {
